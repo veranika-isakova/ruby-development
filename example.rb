@@ -19,7 +19,7 @@
            "Ref": "InstanceSecurityGroup"
       }
 ] },
-  "Type": "AWS::EC2::Instance"
+      "Type": "AWS::EC2::Instance"
 },
 "InstanceSecurityGroup": {
   "Properties": {
