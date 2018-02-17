@@ -1,12 +1,14 @@
 require 'json'
 
-class Value
 
-    attr_accessor :Fn
+class InstanceSecurityGroup
+
+    attr_accessor :Properties, :Type
 
     def as_json(options={})
         {
-            "Fn::GetAtt": @Fn
+            Properties: @Properties,
+            Type: @Type
         }
     end
 

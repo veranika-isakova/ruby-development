@@ -1,7 +1,7 @@
 require 'json'
 
 
-class Properties
+class Properties_ec2Instance
 
     attr_accessor :ImageId, :InstanceType, :SecurityGroups
 
