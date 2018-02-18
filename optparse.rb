@@ -2,7 +2,6 @@ require 'optparse'
 
 module HashOptions
   OPTIONS = {}
-
   OPTIONS[:instances] = "1"
   OPTIONS[:instanceType] = "t2.micro"
   OPTIONS[:allowsshfrom] = "0.0.0.0/0"
