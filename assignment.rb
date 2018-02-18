@@ -22,13 +22,14 @@ publicIP[:Value] = value
 value[:"Fn::GetAtt"] = ["EC2Instance", "PublicIp"]
 
 template[:Resources] = {}
+template[:Resources][:EC2Instance] = ec2instance
 ec2instance[:Properties] = properties_ec2Instance
 properties_ec2Instance[:ImageId] = "ami-b97a12ce"
 properties_ec2Instance[:InstanceType] = options[:instanceType]
 properties_ec2Instance[:SecurityGroups] = [securityGroup]
 securityGroup[:Ref] = "InstanceSecurityGroup"
 ec2instance[:Type] = "AWS::EC2::Instance"
-template[:Resources][:EC2Instance] = ec2instance
+
 
 for i in 2..options[:instances].to_i do
   template[:Resources][:"EC2Instance#{i}"] = ec2instance
