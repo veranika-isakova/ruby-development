@@ -1,6 +1,6 @@
 require 'json'
-require './template_generator.rb'
-require './optparse.rb'
+require './template_generator'
+require './optparse'
 
 options = HashOptions::OPTIONS
-puts JSON.pretty_generate(TemplateGenerator::generate(options))
+puts JSON.pretty_generate(TemplateGenerator.generate(options))
