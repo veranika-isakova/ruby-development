@@ -15,18 +15,25 @@ module TemplateGenerator1
               :'Fn::GetAtt' => ['EC2Instance', 'PublicIp']
             }
 
-    resource 'EC2Instance',
-            :Properties => {
-              :ImageId => 'ami-b97a12ce',
-              :InstanceType => 't2.micro',
-              :SecurityGroups => [ref('InstanceSecurityGroup')]
-            },
-            :Type => 'AWS::EC2::Instance'
+    for i in 1..options[:instances].to_i do
+      key = ''
+      if i > 1
+        then key = i.to_s
+      end
+      resource 'EC2Instance'+key,
+              :Properties => {
+                :ImageId => 'ami-b97a12ce',
+                :InstanceType => options[:instanceType],
+                :SecurityGroups => [ref('InstanceSecurityGroup')]
+              },
+              :Type => 'AWS::EC2::Instance'
+
+    end
 
     resource 'InstanceSecurityGroup',
             :Properties => {
               :GroupDescription => 'Enable SSH access via port 22',
-              :SecurityGroupIngress => [{:CidrIp => '0.0.0.0/0', :FromPort => '22', :IpProtocol => 'tcp', :ToPort => '22'}]
+              :SecurityGroupIngress => [{:CidrIp => options[:allowsshfrom], :FromPort => '22', :IpProtocol => 'tcp', :ToPort => '22'}]
             },
             :Type => 'AWS::EC2::SecurityGroup'
 
