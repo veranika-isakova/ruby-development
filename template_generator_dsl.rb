@@ -1,7 +1,6 @@
-require 'bundler/setup'
 require 'cloudformation-ruby-dsl/cfntemplate'
 
-module TemplateGenerator1
+module TemplateGenerator_dsl
   def self.generate(options)
 
     tmpl = template do
@@ -9,7 +8,7 @@ module TemplateGenerator1
 
     value :AWSTemplateFormatVersion => '2010-09-09'
 
-    output 'PublicIP',
+    output  :PublicIP,
             :Description => 'Public IP address of the newly created EC2 instance',
             :Value => {
               :'Fn::GetAtt' => ['EC2Instance', 'PublicIp']
@@ -20,17 +19,17 @@ module TemplateGenerator1
       if i > 1
         then key = i.to_s
       end
-      resource 'EC2Instance'+key,
-              :Properties => {
-                :ImageId => 'ami-b97a12ce',
-                :InstanceType => options[:instanceType],
-                :SecurityGroups => [ref('InstanceSecurityGroup')]
-              },
-              :Type => 'AWS::EC2::Instance'
+      resource  :"EC2Instance#{key}",
+                :Properties => {
+                  :ImageId => 'ami-b97a12ce',
+                  :InstanceType => options[:instanceType],
+                  :SecurityGroups => [ref('InstanceSecurityGroup')]
+                },
+                :Type => 'AWS::EC2::Instance'
 
     end
 
-    resource 'InstanceSecurityGroup',
+    resource :InstanceSecurityGroup,
             :Properties => {
               :GroupDescription => 'Enable SSH access via port 22',
               :SecurityGroupIngress => [{:CidrIp => options[:allowsshfrom], :FromPort => '22', :IpProtocol => 'tcp', :ToPort => '22'}]
@@ -38,6 +37,6 @@ module TemplateGenerator1
             :Type => 'AWS::EC2::SecurityGroup'
 
    end
-   tmpl
+   tmpl.instance_variable_get(:@dict)
   end
 end
