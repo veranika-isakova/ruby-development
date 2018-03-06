@@ -3,3 +3,6 @@ Documentation:
 
 Style/MutableConstant:
   Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
